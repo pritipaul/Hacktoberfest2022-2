@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+
+typedef struct stack_linked
+{
+    int data;
+    struct stack_linked *next;
+} st;
+
+void traversal(st *top)
+{
+    while (top != NULL)
+    {
+        printf("Elemene : %d\n", top->data);
+        top = top->next;
+    }
+}
+
+int isempty(st *top)
+{
+    if (top == NULL)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int isfull(st *top)
+{
+    st *ptr = (st *)malloc(sizeof(st));
+    if (ptr == NULL)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+st *push(st *top, int data)
+{
+    if (isfull(top))
+    {
+        printf("Stack is overflow\n");
+        return 0;
+    }
+    else
+    {
+        st *ptr = (st *)malloc(sizeof(st));
+        ptr->data = data;
+        ptr->next = top;
+        top = ptr;
+        return top;
+    }
+}
+
+
+
+
+
+      
+
+void delete_duplicate(st *head){
+    st *ptr1 = head;
+    st *dup = (st*)malloc(sizeof(st));
+    while (ptr1 != NULL && ptr1->next != NULL)
+    {
+        st *ptr2 = ptr1;
+        while (ptr2->next != NULL)
+        {
+            if (ptr1->data == ptr2->next->data)
+            {
+                dup = ptr2->next;
+                ptr2->next = ptr2->next->next;
+                free(dup);
+            }
+            else
+            {
+                ptr2 = ptr2->next;
+            }   
+        }
+    }
+    ptr1 = ptr1->next;
+}
+
+int main(int argc, char const *argv[])
+{
+    st *top = NULL;
+    top = push(top, 5);
+    top = push(top, 6);
+    top = push(top, 3);
+    top = push(top, 6);
+    top = push(top, 10);
+    top = push(top, 3);
+    top = push(top, 48);
+    traversal(top);
+
+    delete_duplicate(top);
+    traversal(top);
+    return 0;
+}
